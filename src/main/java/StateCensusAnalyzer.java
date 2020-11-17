@@ -40,6 +40,10 @@ public class StateCensusAnalyzer {
 			e.printStackTrace();
 			throw new CensusAnalyzerException(CensusAnalyzerException.CensusExceptionType.SOME_OTHER_IO_EXCEPTION, "Some other IO Exception");
 		}
+		catch (RuntimeException e) {
+			e.printStackTrace();
+			throw new CensusAnalyzerException(CensusAnalyzerException.CensusExceptionType.DELIMITER_ISSUE, "Delimiter Incorrect");
+		}
 		return count;
 	}
 

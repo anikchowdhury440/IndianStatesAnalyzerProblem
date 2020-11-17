@@ -7,6 +7,7 @@ public class StateCensusAnalyzerTest {
 	public static final String STATECENSUS_WRONGFILE = "C:\\Users\\Anik Chowdhury\\Github\\IndianStateCensusAnalyzerProblem\\src\\main\\resources\\IndiaCensusData.csv";
 	public static final String STATECENSUS_TEXTFILE = "C:\\Users\\Anik Chowdhury\\Github\\IndianStateCensusAnalyzerProblem\\src\\main\\resources\\IndiaStateCensusData.txt";
 	public static final String STATECENSUS_WRONGDELIMITER_FILE = "C:\\Users\\Anik Chowdhury\\Github\\IndianStateCensusAnalyzerProblem\\src\\main\\resources\\IndiaStateCensusDataWrongDelimiter.csv";
+	public static final String STATECODE_CSVFILE  = "C:\\Users\\Anik Chowdhury\\Github\\IndianStateCensusAnalyzerProblem\\src\\main\\resources\\IndiaStateCode.csv";
 	
 	@Test
 	public void givenStateCensusCSVFile_EnsuresNoOfRecordMatches_ShouldReturnTrue() {
@@ -49,4 +50,14 @@ public class StateCensusAnalyzerTest {
 	         Assert.assertEquals(CensusAnalyzerException.CensusExceptionType.DELIMITER_ISSUE, e.type);
 	    }
 	}
+	
+	@Test
+	 public void givenStateCensusCSVFile_WhenCorrectButHeaderIncorrect_ShouldReturnCensusAnalyserException() {
+		 try {
+			 StateCensusAnalyzer.loadStateCensusCSV(STATECODE_CSVFILE);
+	     } 
+		 catch (CensusAnalyzerException e) {
+			 Assert.assertEquals(CensusAnalyzerException.CensusExceptionType.INCORRECT_HEADER, e.type);
+	     }
+	 }
 }

@@ -1,14 +1,12 @@
 import java.io.Reader;
 import java.util.Iterator;
 
-import org.apache.commons.io.FilenameUtils;
-
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
 
-public class OpenCSVBuilder {
+public class OpenCSVBuilder<E> implements ICSVBuilder {
 	
-	public static <E> Iterator<E> getCsvFileIterator(Reader reader, Class<E> csvClass) 
+	public Iterator<E> getCsvFileIterator(Reader reader, Class csvClass) 
 														throws CensusAnalyzerException {
 		try {
 			CsvToBean<E> csvToBean = new CsvToBeanBuilder<E>(reader)
@@ -20,13 +18,6 @@ public class OpenCSVBuilder {
 		catch (RuntimeException e) {
 			e.printStackTrace();
 			throw new CensusAnalyzerException(CensusAnalyzerException.CensusExceptionType.INCORRECT_HEADER, "Incorrect header");
-		}
-	}
-
-	public static void checkType(String csvFilePath) throws CensusAnalyzerException {
-		String extension = FilenameUtils.getExtension(csvFilePath);
-		if(!extension.equals("csv")) {
-			throw new CensusAnalyzerException(CensusAnalyzerException.CensusExceptionType.INCORRECT_FILE_TYPE, "Incorrect file type");
 		}
 	}
 }

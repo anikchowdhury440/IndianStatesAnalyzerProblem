@@ -11,8 +11,9 @@ public class StateCensusAnalyzer {
 
 	public static int loadStateCensusCSV(String csvFilePath) throws CensusAnalyzerException {
 		try(Reader reader = Files.newBufferedReader(Paths.get(csvFilePath));) {
-			OpenCSVBuilder.checkType(csvFilePath);
-			Iterator<CSVStateCensus> myIterator = OpenCSVBuilder.getCsvFileIterator(reader, CSVStateCensus.class);
+			FileType.checkCSVType(csvFilePath);
+			ICSVBuilder csvBuilder = CSVBuilderFactory.createCSVBuilder();
+			Iterator<CSVStateCensus> myIterator = csvBuilder.getCsvFileIterator(reader, CSVStateCensus.class);
 			return getCountFromCSVIterator(myIterator);
 		}
 		catch (NoSuchFileException e) {
@@ -27,8 +28,9 @@ public class StateCensusAnalyzer {
 	
 	public static int loadStateCodeCSV(String csvFilePath) throws CensusAnalyzerException {
 		try(Reader reader = Files.newBufferedReader(Paths.get(csvFilePath));) {
-			OpenCSVBuilder.checkType(csvFilePath);
-			Iterator<CSVStateCode> myIterator = OpenCSVBuilder.getCsvFileIterator(reader, CSVStateCode.class);
+			FileType.checkCSVType(csvFilePath);
+			ICSVBuilder csvBuilder = CSVBuilderFactory.createCSVBuilder();
+			Iterator<CSVStateCode> myIterator = csvBuilder.getCsvFileIterator(reader, CSVStateCode.class);
 			return getCountFromCSVIterator(myIterator);
 		}
 		catch (NoSuchFileException e) {

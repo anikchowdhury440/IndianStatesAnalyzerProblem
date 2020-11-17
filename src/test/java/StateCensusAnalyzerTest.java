@@ -105,4 +105,14 @@ public class StateCensusAnalyzerTest {
 		     Assert.assertEquals(CensusAnalyzerException.CensusExceptionType.DELIMITER_ISSUE, e.type);
 		 }
 	 }
+	
+	 @Test
+	 public void givenStateCodeCSVFile_WhenCorrectButHeaderIncorrect_ShouldReturnCensusAnalyserException() {
+		 try {
+			 StateCensusAnalyzer.loadStateCodeCSV(STATECENSUS_CSVFILE);
+		 } 
+		 catch (CensusAnalyzerException e) {
+			 Assert.assertEquals(CensusAnalyzerException.CensusExceptionType.INCORRECT_HEADER, e.type);
+		 }
+	 }
 }

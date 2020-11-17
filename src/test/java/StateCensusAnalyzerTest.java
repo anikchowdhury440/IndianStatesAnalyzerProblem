@@ -5,6 +5,7 @@ public class StateCensusAnalyzerTest {
 
 	public static final String STATECENSUS_CSVFILE = "C:\\Users\\Anik Chowdhury\\Github\\IndianStateCensusAnalyzerProblem\\src\\main\\resources\\IndiaStateCensusData.csv";
 	public static final String STATECENSUS_WRONGFILE = "C:\\Users\\Anik Chowdhury\\Github\\IndianStateCensusAnalyzerProblem\\src\\main\\resources\\IndiaCensusData.csv";
+	public static final String STATECENSUS_TEXTFILE = "C:\\Users\\Anik Chowdhury\\Github\\IndianStateCensusAnalyzerProblem\\src\\main\\resources\\IndiaStateCensusData.txt";
 	
 	@Test
 	public void givenStateCensusCSVFile_EnsuresNoOfRecordMatches_ShouldReturnTrue() {
@@ -27,4 +28,14 @@ public class StateCensusAnalyzerTest {
             Assert.assertEquals(CensusAnalyzerException.CensusExceptionType.NO_SUCH_FILE, e.type);
         }
     }
+	
+	@Test
+	public void givenStateCensusCSVFile_IfCorrectButTypeIncorrect_ShouldThrowCensusAnalyzerException() {
+		try {
+            StateCensusAnalyzer.loadStateCensusCSV(STATECENSUS_TEXTFILE);
+        } 
+        catch (CensusAnalyzerException e) {
+            Assert.assertEquals(CensusAnalyzerException.CensusExceptionType.INCORRECT_FILE_TYPE, e.type);
+        }
+	}
 }

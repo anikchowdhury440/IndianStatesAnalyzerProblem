@@ -5,6 +5,8 @@ import java.nio.file.NoSuchFileException;
 import java.nio.file.Paths;
 import java.util.Iterator;
 
+import org.apache.commons.io.FilenameUtils;
+
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
 
@@ -16,6 +18,10 @@ public class StateCensusAnalyzer {
 		CsvToBean<CSVStateCensus> csvToBean = null;
 		try {
 			reader = Files.newBufferedReader(Paths.get(csvFilePath));
+			String extension = FilenameUtils.getExtension(csvFilePath);
+			if(!extension.equals("csv")) {
+				throw new CensusAnalyzerException(CensusAnalyzerException.CensusExceptionType.INCORRECT_FILE_TYPE, "Incorrect header");
+			}
 			csvToBean = new CsvToBeanBuilder<CSVStateCensus>(reader)
 	                    .withType(CSVStateCensus.class)
 	                    .withIgnoreLeadingWhiteSpace(true)

@@ -1,7 +1,7 @@
 
 public class CensusAnalyzerException extends Exception{
 	enum CensusExceptionType{
-        NO_SUCH_FILE, SOME_OTHER_IO_EXCEPTION;
+        NO_SUCH_FILE, SOME_OTHER_IO_EXCEPTION, INCORRECT_FILE_TYPE;
     }
     CensusExceptionType type;
 

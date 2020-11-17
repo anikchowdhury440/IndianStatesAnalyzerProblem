@@ -52,12 +52,24 @@ public class StateCensusAnalyzerTest {
 	}
 	
 	@Test
-	 public void givenStateCensusCSVFile_WhenCorrectButHeaderIncorrect_ShouldReturnCensusAnalyserException() {
+	public void givenStateCensusCSVFile_WhenCorrectButHeaderIncorrect_ShouldReturnCensusAnalyserException() {
 		 try {
 			 StateCensusAnalyzer.loadStateCensusCSV(STATECODE_CSVFILE);
 	     } 
 		 catch (CensusAnalyzerException e) {
 			 Assert.assertEquals(CensusAnalyzerException.CensusExceptionType.INCORRECT_HEADER, e.type);
 	     }
-	 }
+	}
+	
+	@Test
+	public void givenStateCodeCSVFile_EnsuresNoOfRecordMatches_ShouldReturnTrue() {
+		try {
+			int count = StateCensusAnalyzer.loadStateCodeCSV(STATECODE_CSVFILE);
+			Assert.assertEquals(37, count);
+			System.out.println(count);
+		} 
+		catch (CensusAnalyzerException e) {
+			e.printStackTrace();
+		}
+	}
 }

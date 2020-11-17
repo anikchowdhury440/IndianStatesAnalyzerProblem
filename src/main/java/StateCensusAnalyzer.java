@@ -13,25 +13,20 @@ import com.opencsv.bean.CsvToBeanBuilder;
 public class StateCensusAnalyzer {
 
 	public static int loadStateCensusCSV(String csvFilePath) throws CensusAnalyzerException {
-		int count = 0;
-		try {
-			Iterator<CSVStateCensus> myIterator = getCsvFileIterator(csvFilePath, CSVStateCensus.class);
-			while(myIterator.hasNext()) {
-				count++;
-				myIterator.next();
-			}
-		}
-		catch (RuntimeException e) {
-			e.printStackTrace();
-			throw new CensusAnalyzerException(CensusAnalyzerException.CensusExceptionType.DELIMITER_ISSUE, "Delimiter Incorrect");
-		}
-		return count;
+		
+		Iterator<CSVStateCensus> myIterator = getCsvFileIterator(csvFilePath, CSVStateCensus.class);
+		return getCountFromCSVIterator(myIterator);
 	}
 	
 	public static int loadStateCodeCSV(String csvFilePath) throws CensusAnalyzerException {
+		
+		Iterator<CSVStateCode> myIterator = getCsvFileIterator(csvFilePath, CSVStateCode.class);
+		return getCountFromCSVIterator(myIterator);
+	}
+	
+	private static <E> int getCountFromCSVIterator(Iterator<E> myIterator) throws CensusAnalyzerException {
 		int count = 0;
 		try {
-			Iterator<CSVStateCode> myIterator = getCsvFileIterator(csvFilePath, CSVStateCode.class);
 			while(myIterator.hasNext()) {
 				count++;
 				myIterator.next();
@@ -57,8 +52,7 @@ public class StateCensusAnalyzer {
 	                    .withType(csvClass)
 	                    .withIgnoreLeadingWhiteSpace(true)
 	                    .build();
-			Iterator<E> myIterator = csvToBean.iterator();
-			return myIterator;
+			return csvToBean.iterator();
 		}
 		catch (NoSuchFileException e) {
 			e.printStackTrace();

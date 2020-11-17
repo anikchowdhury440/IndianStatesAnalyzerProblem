@@ -56,12 +56,12 @@ public class StateCensusAnalyzerTest {
 	
 	@Test
 	public void givenStateCensusCSVFile_WhenCorrectButHeaderIncorrect_ShouldReturnCensusAnalyserException() {
-		 try {
-			 StateCensusAnalyzer.loadStateCensusCSV(STATECODE_CSVFILE);
-	     } 
-		 catch (CensusAnalyzerException e) {
-			 Assert.assertEquals(CensusAnalyzerException.CensusExceptionType.INCORRECT_HEADER, e.type);
-	     }
+		try {
+			StateCensusAnalyzer.loadStateCensusCSV(STATECODE_CSVFILE);
+	    } 
+		catch (CensusAnalyzerException e) {
+			Assert.assertEquals(CensusAnalyzerException.CensusExceptionType.INCORRECT_HEADER, e.type);
+		}
 	}
 	
 	@Test

@@ -6,8 +6,7 @@ import com.opencsv.bean.CsvToBeanBuilder;
 
 public class OpenCSVBuilder<E> implements ICSVBuilder {
 	
-	public Iterator<E> getCsvFileIterator(Reader reader, Class csvClass) 
-														throws CensusAnalyzerException {
+	public Iterator<E> getCsvFileIterator(Reader reader, Class csvClass) throws CSVBuilderException {
 		try {
 			CsvToBean<E> csvToBean = new CsvToBeanBuilder<E>(reader)
 	                    .withType(csvClass)
@@ -17,7 +16,7 @@ public class OpenCSVBuilder<E> implements ICSVBuilder {
 		}
 		catch (RuntimeException e) {
 			e.printStackTrace();
-			throw new CensusAnalyzerException(CensusAnalyzerException.CensusExceptionType.INCORRECT_HEADER, "Incorrect header");
+			throw new CSVBuilderException(CSVBuilderException.ExceptionType.UNABLE_TO_PARSE, "Unable to Parse");
 		}
 	}
 }

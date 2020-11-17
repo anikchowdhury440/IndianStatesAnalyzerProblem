@@ -5,8 +5,6 @@ import java.nio.file.NoSuchFileException;
 import java.nio.file.Paths;
 import java.util.Iterator;
 
-import org.apache.commons.io.FilenameUtils;
-
 public class StateCensusAnalyzer {
 
 	public static int loadStateCensusCSV(String csvFilePath) throws CensusAnalyzerException {
@@ -24,6 +22,9 @@ public class StateCensusAnalyzer {
 			e.printStackTrace();
 			throw new CensusAnalyzerException(CensusAnalyzerException.CensusExceptionType.SOME_OTHER_IO_EXCEPTION, "Some other IO Exception");
 		}
+		catch (CSVBuilderException e) {
+			throw new CensusAnalyzerException(CensusAnalyzerException.CensusExceptionType.INCORRECT_HEADER, "Incorrect Header");
+		}
 	}
 	
 	public static int loadStateCodeCSV(String csvFilePath) throws CensusAnalyzerException {
@@ -40,6 +41,9 @@ public class StateCensusAnalyzer {
 		catch (IOException e) {
 			e.printStackTrace();
 			throw new CensusAnalyzerException(CensusAnalyzerException.CensusExceptionType.SOME_OTHER_IO_EXCEPTION, "Some other IO Exception");
+		}
+		catch (CSVBuilderException e) {
+			throw new CensusAnalyzerException(CensusAnalyzerException.CensusExceptionType.INCORRECT_HEADER, "Incorrect Header");
 		}
 	}
 	

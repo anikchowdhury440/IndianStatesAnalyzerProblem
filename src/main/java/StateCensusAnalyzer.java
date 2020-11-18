@@ -4,9 +4,9 @@ import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Paths;
 import java.util.Iterator;
-
+import CSVBuilderJar.CSVBuilderJar.*;
 public class StateCensusAnalyzer {
-
+	
 	public static int loadStateCensusCSV(String csvFilePath) throws CensusAnalyzerException {
 		try(Reader reader = Files.newBufferedReader(Paths.get(csvFilePath));) {
 			FileType.checkCSVType(csvFilePath);

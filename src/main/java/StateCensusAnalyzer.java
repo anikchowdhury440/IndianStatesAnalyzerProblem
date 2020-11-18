@@ -14,6 +14,7 @@ import CSVBuilderJar.CSVBuilderJar.*;
 
 public class StateCensusAnalyzer {
 	static List<CSVStateCensus> stateCensusList = null;
+	static List<CSVStateCode> stateCodeList = null;
 	
 	public static int loadStateCensusCSV(String csvFilePath) throws CensusAnalyzerException {
 		try(Reader reader = Files.newBufferedReader(Paths.get(csvFilePath));) {
@@ -44,8 +45,8 @@ public class StateCensusAnalyzer {
 		try(Reader reader = Files.newBufferedReader(Paths.get(csvFilePath));) {
 			FileType.checkCSVType(csvFilePath);
 			ICSVBuilder csvBuilder = CSVBuilderFactory.createCSVBuilder();
-			List<CSVStateCode> stateCensusList = csvBuilder.getCSVFileList(reader, CSVStateCode.class);
-			return stateCensusList.size();
+			stateCodeList = csvBuilder.getCSVFileList(reader, CSVStateCode.class);
+			return stateCodeList.size();
 		}
 		catch (NoSuchFileException e) {
 			e.printStackTrace();
@@ -74,5 +75,16 @@ public class StateCensusAnalyzer {
 				.collect(Collectors.toList());
 		String sortedStateCensusJson = new Gson().toJson(stateCensusList);
 		return sortedStateCensusJson;
+	}
+	
+	public static String getSortByStateCode() throws CensusAnalyzerException {
+		if(stateCodeList == null || stateCodeList.size() == 0) {
+			throw new CensusAnalyzerException(CensusAnalyzerException.CensusExceptionType.NO_CENSUS_DATA, "No Census Data ");
+		}
+		stateCodeList = stateCodeList.stream()
+				.sorted((data1, data2) -> data1.getStateCode().compareTo(data2.getStateCode()))
+				.collect(Collectors.toList());
+		String sortedStateCodeJson = new Gson().toJson(stateCodeList);
+		return sortedStateCodeJson;
 	}
 }

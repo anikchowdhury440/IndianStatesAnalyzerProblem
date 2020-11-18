@@ -141,4 +141,28 @@ public class StateCensusAnalyzerTest {
 			 Assert.assertEquals(CensusAnalyzerException.CensusExceptionType.NO_CENSUS_DATA,e.type);
 		}
 	 }
+	 
+	 @Test
+	 public void givenStateCodeData_WhenSortedByStateCode_ShouldReturnSortedResult() {
+		 try {
+			 StateCensusAnalyzer.loadStateCodeCSV(STATECODE_CSVFILE);
+			 String sortedStateCodeData = StateCensusAnalyzer.getSortByStateCode();
+			 CSVStateCode[] stateCodeCSV = new Gson().fromJson(sortedStateCodeData, CSVStateCode[].class);
+			 Assert.assertEquals("Andhra Pradesh New", stateCodeCSV[0].getStateName());
+			 Assert.assertEquals("West Bengal", stateCodeCSV[36].getStateName());
+		 }
+		 catch (CensusAnalyzerException e) {
+			// TODO: handle exception
+		}
+	 }
+	 
+	 @Test
+	 public void givenStateCodeData_IsNullorEmpty_ShouldNotReturnSortedResult() {
+		 try {
+			 StateCensusAnalyzer.getSortByStateCode();
+		 }
+		 catch (CensusAnalyzerException e) {
+			 Assert.assertEquals(CensusAnalyzerException.CensusExceptionType.NO_CENSUS_DATA,e.type);
+		}
+	 }
 }

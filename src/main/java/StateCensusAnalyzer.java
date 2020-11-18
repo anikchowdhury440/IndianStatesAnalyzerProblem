@@ -4,6 +4,7 @@ import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Paths;
 import java.util.Iterator;
+import java.util.List;
 
 import CSVBuilderJar.CSVBuilderJar.*;
 
@@ -13,8 +14,8 @@ public class StateCensusAnalyzer {
 		try(Reader reader = Files.newBufferedReader(Paths.get(csvFilePath));) {
 			FileType.checkCSVType(csvFilePath);
 			ICSVBuilder csvBuilder = CSVBuilderFactory.createCSVBuilder();
-			Iterator<CSVStateCensus> myIterator = csvBuilder.getCsvFileIterator(reader, CSVStateCensus.class);
-			return getCountFromCSVIterator(myIterator);
+			List<CSVStateCensus> stateCensusList = csvBuilder.getCSVFileList(reader, CSVStateCensus.class);
+			return stateCensusList.size();
 		}
 		catch (NoSuchFileException e) {
 			e.printStackTrace();
@@ -25,7 +26,12 @@ public class StateCensusAnalyzer {
 			throw new CensusAnalyzerException(CensusAnalyzerException.CensusExceptionType.SOME_OTHER_IO_EXCEPTION, "Some other IO Exception");
 		}
 		catch (CSVBuilderException e) {
-			throw new CensusAnalyzerException(CensusAnalyzerException.CensusExceptionType.INCORRECT_HEADER, "Incorrect Header");
+			e.printStackTrace();
+			throw new CensusAnalyzerException(CensusAnalyzerException.CensusExceptionType.UNABLE_TO_PARSE, "Unable to parse");
+		}
+		catch(RuntimeException e) {
+			e.printStackTrace();
+			throw new CensusAnalyzerException(CensusAnalyzerException.CensusExceptionType.INCORRECT_DATA, "Incorrect Data");
 		}
 	}
 	
@@ -33,8 +39,8 @@ public class StateCensusAnalyzer {
 		try(Reader reader = Files.newBufferedReader(Paths.get(csvFilePath));) {
 			FileType.checkCSVType(csvFilePath);
 			ICSVBuilder csvBuilder = CSVBuilderFactory.createCSVBuilder();
-			Iterator<CSVStateCode> myIterator = csvBuilder.getCsvFileIterator(reader, CSVStateCode.class);
-			return getCountFromCSVIterator(myIterator);
+			List<CSVStateCode> stateCensusList = csvBuilder.getCSVFileList(reader, CSVStateCensus.class);
+			return stateCensusList.size();
 		}
 		catch (NoSuchFileException e) {
 			e.printStackTrace();
@@ -45,23 +51,14 @@ public class StateCensusAnalyzer {
 			throw new CensusAnalyzerException(CensusAnalyzerException.CensusExceptionType.SOME_OTHER_IO_EXCEPTION, "Some other IO Exception");
 		}
 		catch (CSVBuilderException e) {
-			throw new CensusAnalyzerException(CensusAnalyzerException.CensusExceptionType.INCORRECT_HEADER, "Incorrect Header");
+			e.printStackTrace();
+			throw new CensusAnalyzerException(CensusAnalyzerException.CensusExceptionType.UNABLE_TO_PARSE, "Unable to parse");
+		}
+		catch(RuntimeException e) {
+			e.printStackTrace();
+			throw new CensusAnalyzerException(CensusAnalyzerException.CensusExceptionType.INCORRECT_DATA, "Incorrect Data");
 		}
 	}
 	
-	private static <E> int getCountFromCSVIterator(Iterator<E> myIterator) throws CensusAnalyzerException {
-		int count = 0;
-		try {
-			while(myIterator.hasNext()) {
-				count++;
-				myIterator.next();
-			}
-		}
-		catch (RuntimeException e) {
-			e.printStackTrace();
-			throw new CensusAnalyzerException(CensusAnalyzerException.CensusExceptionType.DELIMITER_ISSUE, "Delimiter Incorrect");
-		}
-		return count;
-	}
 	
 }

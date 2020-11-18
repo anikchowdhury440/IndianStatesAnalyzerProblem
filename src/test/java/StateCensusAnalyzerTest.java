@@ -50,7 +50,7 @@ public class StateCensusAnalyzerTest {
 	         StateCensusAnalyzer.loadStateCensusCSV(STATECENSUS_WRONGDELIMITER_FILE);
 	    } 
 	    catch (CensusAnalyzerException e) {
-	         Assert.assertEquals(CensusAnalyzerException.CensusExceptionType.DELIMITER_ISSUE, e.type);
+	         Assert.assertEquals(CensusAnalyzerException.CensusExceptionType.INCORRECT_DATA, e.type);
 	    }
 	}
 	
@@ -60,7 +60,7 @@ public class StateCensusAnalyzerTest {
 			StateCensusAnalyzer.loadStateCensusCSV(STATECODE_CSVFILE);
 	    } 
 		catch (CensusAnalyzerException e) {
-			Assert.assertEquals(CensusAnalyzerException.CensusExceptionType.INCORRECT_HEADER, e.type);
+			Assert.assertEquals(CensusAnalyzerException.CensusExceptionType.INCORRECT_DATA, e.type);
 		}
 	}
 	
@@ -102,7 +102,7 @@ public class StateCensusAnalyzerTest {
 			 StateCensusAnalyzer.loadStateCodeCSV(STATECODE_WRONGDELIMITER_FILE);
 		 } 
 		 catch (CensusAnalyzerException e) {
-		     Assert.assertEquals(CensusAnalyzerException.CensusExceptionType.DELIMITER_ISSUE, e.type);
+		     Assert.assertEquals(CensusAnalyzerException.CensusExceptionType.INCORRECT_DATA, e.type);
 		 }
 	 }
 	
@@ -112,7 +112,7 @@ public class StateCensusAnalyzerTest {
 			 StateCensusAnalyzer.loadStateCodeCSV(STATECENSUS_CSVFILE);
 		 } 
 		 catch (CensusAnalyzerException e) {
-			 Assert.assertEquals(CensusAnalyzerException.CensusExceptionType.INCORRECT_HEADER, e.type);
+			 Assert.assertEquals(CensusAnalyzerException.CensusExceptionType.INCORRECT_DATA, e.type);
 		 }
 	 }
 }

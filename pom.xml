@@ -36,7 +36,7 @@
 		<artifactId>CSVBuilderJar</artifactId>
 		<scope>system</scope>
 		<version>1.0</version>
-		<systemPath>${basedir}/src/lib/csvBuilder.jar</systemPath>
+		<systemPath>${basedir}/src/lib/csvBuilderJar.jar</systemPath>
 	</dependency>
 	<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-csv -->
 	<dependency>

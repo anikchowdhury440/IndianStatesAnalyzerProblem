@@ -5,10 +5,8 @@ import java.nio.file.NoSuchFileException;
 import java.nio.file.Paths;
 import java.util.Iterator;
 
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVRecord;
-
 import CSVBuilderJar.CSVBuilderJar.*;
+
 public class StateCensusAnalyzer {
 	
 	public static int loadStateCensusCSV(String csvFilePath) throws CensusAnalyzerException {

@@ -133,7 +133,7 @@ public class StateCensusAnalyzerTest {
 	 }
 	 
 	 @Test
-	 public void givenStateCensusData_IsNullorEmpty_ShouldNotReturnSortedResult() {
+	 public void givenStateCensusData_WhenSortedByStateName_IsNullorEmpty_ShouldThrowCensusAnalyzerException() {
 		 try {
 			 StateCensusAnalyzer.getSortByStateCensusData();
 		 }
@@ -157,7 +157,7 @@ public class StateCensusAnalyzerTest {
 	 }
 	 
 	 @Test
-	 public void givenStateCodeData_IsNullorEmpty_ShouldNotReturnSortedResult() {
+	 public void givenStateCodeData_IsNullorEmpty_ShouldThrowCensusAnalyzerException() {
 		 try {
 			 StateCensusAnalyzer.getSortByStateCode();
 		 }
@@ -165,4 +165,29 @@ public class StateCensusAnalyzerTest {
 			 Assert.assertEquals(CensusAnalyzerException.CensusExceptionType.NO_CENSUS_DATA,e.type);
 		}
 	 }
+	 
+	 @Test
+	 public void givenStateCensusData_WhenSortedByPopulation_ShouldReturnSortedResult() {
+		 try {
+			 StateCensusAnalyzer.loadStateCensusCSV(STATECENSUS_CSVFILE);
+			 String sortedCensusData = StateCensusAnalyzer.getSortByPopulationCensusData();
+			 CSVStateCensus[] censusCSV = new Gson().fromJson(sortedCensusData, CSVStateCensus[].class);
+			 Assert.assertEquals("Uttar Pradesh", censusCSV[0].getStateName());
+			 Assert.assertEquals("Sikkim", censusCSV[28].getStateName());
+		 }
+		 catch (CensusAnalyzerException e) {
+			// TODO: handle exception
+		}
+	 }
+	 
+	 @Test
+	 public void givenStateCensusData_WhenSortedByPopulation_IsNullorEmpty_ShouldThrowCensusAnalyzerException() {
+		 try {
+			 StateCensusAnalyzer.getSortByPopulationCensusData();
+		 }
+		 catch (CensusAnalyzerException e) {
+			 Assert.assertEquals(CensusAnalyzerException.CensusExceptionType.NO_CENSUS_DATA,e.type);
+		}
+	 }
+
 }

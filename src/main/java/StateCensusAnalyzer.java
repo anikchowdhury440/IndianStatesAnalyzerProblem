@@ -67,9 +67,7 @@ public class StateCensusAnalyzer {
 	}
 	
 	public static String getSortByStateCensusData() throws CensusAnalyzerException {
-		if(stateCensusList == null || stateCensusList.size() == 0) {
-			throw new CensusAnalyzerException(CensusAnalyzerException.CensusExceptionType.NO_CENSUS_DATA, "No Census Data ");
-		}
+		checkListEmpty();
 		stateCensusList = stateCensusList.stream()
 				.sorted((data1, data2) -> data1.getStateName().compareTo(data2.getStateName()))
 				.collect(Collectors.toList());
@@ -86,5 +84,20 @@ public class StateCensusAnalyzer {
 				.collect(Collectors.toList());
 		String sortedStateCodeJson = new Gson().toJson(stateCodeList);
 		return sortedStateCodeJson;
+	}
+	
+	public static String getSortByPopulationCensusData() throws CensusAnalyzerException {
+		checkListEmpty();
+		stateCensusList = stateCensusList.stream()
+				.sorted((data1, data2) -> data2.getPopulation().compareTo(data1.getPopulation()))
+				.collect(Collectors.toList());
+		String sortedStateCensusJson = new Gson().toJson(stateCensusList);
+		return sortedStateCensusJson;
+	}
+	
+	public static void checkListEmpty() throws CensusAnalyzerException {
+		if(stateCensusList == null || stateCensusList.size() == 0) {
+			throw new CensusAnalyzerException(CensusAnalyzerException.CensusExceptionType.NO_CENSUS_DATA, "No Census Data ");
+		}
 	}
 }

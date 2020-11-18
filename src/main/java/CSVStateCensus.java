@@ -6,13 +6,13 @@ public class CSVStateCensus {
 	private String stateName;
 	
 	@CsvBindByName(column = "Population", required = true)
-	private String population;
+	private Long population;
 	
 	@CsvBindByName(column = "AreaInSqKm", required = true)
-	private String areaInSqKm;
+	private Long areaInSqKm;
 	
 	@CsvBindByName(column = "DensityPerSqKm", required = true)
-	private String densityPerSqKm;
+	private Long densityPerSqKm;
 	
 	public void setStateName(String stateName) {
 		this.stateName = stateName;
@@ -22,27 +22,27 @@ public class CSVStateCensus {
 		return stateName;
 	}
 	
-	public void setPopulation(String population) {
+	public void setPopulation(Long population) {
 		this.population = population;
 	}
 	
-	public String getPopulation() {
+	public Long getPopulation() {
 		return population;
 	}
 	
-	public void setAreaInSqKm(String areaInSqKm) {
+	public void setAreaInSqKm(Long areaInSqKm) {
 		this.areaInSqKm = areaInSqKm;
 	}
 	
-	public String getAreaInSqKm() {
+	public Long getAreaInSqKm() {
 		return areaInSqKm;
 	}
 	
-	public void setDensityPerSqKm(String densityPerSqKm) {
+	public void setDensityPerSqKm(Long densityPerSqKm) {
 		this.densityPerSqKm = densityPerSqKm;
 	}
 	
-	public String getDensityPerSqKm() {
+	public Long getDensityPerSqKm() {
 		return densityPerSqKm;
 	}
 	

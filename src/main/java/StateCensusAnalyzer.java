@@ -3,18 +3,23 @@ import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Paths;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import com.google.gson.Gson;
 
 import CSVBuilderJar.CSVBuilderJar.*;
 
 public class StateCensusAnalyzer {
+	static List<CSVStateCensus> stateCensusList = null;
 	
 	public static int loadStateCensusCSV(String csvFilePath) throws CensusAnalyzerException {
 		try(Reader reader = Files.newBufferedReader(Paths.get(csvFilePath));) {
 			FileType.checkCSVType(csvFilePath);
 			ICSVBuilder csvBuilder = CSVBuilderFactory.createCSVBuilder();
-			List<CSVStateCensus> stateCensusList = csvBuilder.getCSVFileList(reader, CSVStateCensus.class);
+			stateCensusList = csvBuilder.getCSVFileList(reader, CSVStateCensus.class);
 			return stateCensusList.size();
 		}
 		catch (NoSuchFileException e) {
@@ -39,7 +44,7 @@ public class StateCensusAnalyzer {
 		try(Reader reader = Files.newBufferedReader(Paths.get(csvFilePath));) {
 			FileType.checkCSVType(csvFilePath);
 			ICSVBuilder csvBuilder = CSVBuilderFactory.createCSVBuilder();
-			List<CSVStateCode> stateCensusList = csvBuilder.getCSVFileList(reader, CSVStateCensus.class);
+			List<CSVStateCode> stateCensusList = csvBuilder.getCSVFileList(reader, CSVStateCode.class);
 			return stateCensusList.size();
 		}
 		catch (NoSuchFileException e) {
@@ -60,5 +65,14 @@ public class StateCensusAnalyzer {
 		}
 	}
 	
-	
+	public static String getSortByStateCensusData() throws CensusAnalyzerException {
+		if(stateCensusList == null || stateCensusList.size() == 0) {
+			throw new CensusAnalyzerException(CensusAnalyzerException.CensusExceptionType.NO_CENSUS_DATA, "No Census Data ");
+		}
+		stateCensusList = stateCensusList.stream()
+				.sorted((data1, data2) -> data1.getStateName().compareTo(data2.getStateName()))
+				.collect(Collectors.toList());
+		String sortedStateCensusJson = new Gson().toJson(stateCensusList);
+		return sortedStateCensusJson;
+	}
 }

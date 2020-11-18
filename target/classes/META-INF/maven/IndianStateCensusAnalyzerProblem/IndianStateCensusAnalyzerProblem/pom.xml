@@ -38,5 +38,11 @@
 		<version>1.0</version>
 		<systemPath>${basedir}/src/lib/csvBuilder.jar</systemPath>
 	</dependency>
+	<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-csv -->
+	<dependency>
+   		<groupId>org.apache.commons</groupId>
+    	<artifactId>commons-csv</artifactId>
+    	<version>1.8</version>
+	</dependency>
   </dependencies>
 </project>

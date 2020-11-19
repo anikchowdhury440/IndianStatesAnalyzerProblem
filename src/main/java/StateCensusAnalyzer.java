@@ -109,6 +109,16 @@ public class StateCensusAnalyzer {
 		return sortedStateCensusJson;
 	}
 	
+	public static String getSortByStateAreaCensusData() throws CensusAnalyzerException {
+		checkListEmpty();
+		stateCensusList = stateCensusList.stream()
+				.sorted((data1, data2) -> data2.getAreaInSqKm().compareTo(data1.getAreaInSqKm()))
+				.collect(Collectors.toList());
+		String sortedStateCensusJson = JSONOperation.getJson(stateCensusList);
+		JSONOperation.writeToJsonFile(sortedStateCensusJson);
+		return sortedStateCensusJson;
+	}
+	
 	public static void checkListEmpty() throws CensusAnalyzerException {
 		if(stateCensusList == null || stateCensusList.size() == 0) {
 			throw new CensusAnalyzerException(CensusAnalyzerException.CensusExceptionType.NO_CENSUS_DATA, "No Census Data ");

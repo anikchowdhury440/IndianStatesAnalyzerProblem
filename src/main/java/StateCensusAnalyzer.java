@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 
 import CSVBuilderJar.CSVBuilderJar.*;
 
@@ -73,7 +74,7 @@ public class StateCensusAnalyzer {
 		stateCensusList = stateCensusList.stream()
 				.sorted((data1, data2) -> data1.getStateName().compareTo(data2.getStateName()))
 				.collect(Collectors.toList());
-		String sortedStateCensusJson = new Gson().toJson(stateCensusList);
+		String sortedStateCensusJson = JSONOperation.getJson(stateCensusList);
 		return sortedStateCensusJson;
 	}
 	
@@ -84,7 +85,7 @@ public class StateCensusAnalyzer {
 		stateCodeList = stateCodeList.stream()
 				.sorted((data1, data2) -> data1.getStateCode().compareTo(data2.getStateCode()))
 				.collect(Collectors.toList());
-		String sortedStateCodeJson = new Gson().toJson(stateCodeList);
+		String sortedStateCodeJson = JSONOperation.getJson(stateCodeList);
 		return sortedStateCodeJson;
 	}
 	
@@ -93,8 +94,18 @@ public class StateCensusAnalyzer {
 		stateCensusList = stateCensusList.stream()
 				.sorted((data1, data2) -> data2.getPopulation().compareTo(data1.getPopulation()))
 				.collect(Collectors.toList());
-		String sortedStateCensusJson = new Gson().toJson(stateCensusList);
-		writeToJsonFile(sortedStateCensusJson);
+		String sortedStateCensusJson = JSONOperation.getJson(stateCensusList);
+		JSONOperation.writeToJsonFile(sortedStateCensusJson);
+		return sortedStateCensusJson;
+	}
+	
+	public static String getSortByPopulationDensityCensusData() throws CensusAnalyzerException {
+		checkListEmpty();
+		stateCensusList = stateCensusList.stream()
+				.sorted((data1, data2) -> data2.getDensityPerSqKm().compareTo(data1.getDensityPerSqKm()))
+				.collect(Collectors.toList());
+		String sortedStateCensusJson = JSONOperation.getJson(stateCensusList);
+		JSONOperation.writeToJsonFile(sortedStateCensusJson);
 		return sortedStateCensusJson;
 	}
 	
@@ -104,13 +115,4 @@ public class StateCensusAnalyzer {
 		}
 	}
 	
-	public static void writeToJsonFile(String jsonString) {
-		Path path = Paths.get("C:\\Users\\Anik Chowdhury\\Github\\IndianStateCensusAnalyzerProblem\\src\\main\\resources\\IndianStateCensus.json");
-		try (FileWriter writer = new FileWriter(path.toFile())){
-			writer.write(jsonString);
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 }
